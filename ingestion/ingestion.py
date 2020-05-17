@@ -7,7 +7,7 @@ N_TAGS = 1000
 N_LINKS = 1000
 
 USERNAME = "neo4j"
-PASS = "neo4j" #default
+PASS = "Grupo06" #default
 
 graph = Graph("bolt://localhost:7687", auth = (USERNAME, PASS))
 
@@ -76,7 +76,7 @@ def createGenreMovieRelationships(row):
     movieGenres = row[2].split("|")
 
     for movieGenre in movieGenres:
-        graph.run('MATCH (g:Genre {name: {genre}}), (m:Movie {id: {movieId}}) CREATE (g)-[:IS_GENRE_OF]->(m)',
+        graph.run('MATCH (g:Genre {name: $genre}), (m:Movie {id: $movieId}) CREATE (g)-[:IS_GENRE_OF]->(m)',
             genre=movieGenre, movieId=movieId)
 
 def parseRowGenreMovieRelationships(row):
@@ -107,7 +107,7 @@ def createRatingRelationship(row):
     ratingData = parseRowRatingRelationships(row)
 
     graph.run(
-        'MATCH (u:User {id: {userId}}), (m:Movie {id: {movieId}}) CREATE (u)-[:RATED { rating: {rating}, timestamp: {timestamp} }]->(m)',
+        'MATCH (u:User {id: $userId}), (m:Movie {id: $movieId}) CREATE (u)-[:RATED { rating: $rating, timestamp: $timestamp }]->(m)',
         userId=ratingData[0], movieId=ratingData[1], rating=ratingData[2], timestamp=ratingData[3])
 
 def parseRowRatingRelationships(row):
@@ -135,7 +135,7 @@ def createTagRelationship(row):
     tagData = parseRowTagRelationships(row)
 
     graph.run(
-        'MATCH (u:User {id: {userId}}), (m:Movie {id: {movieId}}) CREATE (u)-[:TAGGED { tag: {tag}, timestamp: {timestamp} }]->(m)',
+        'MATCH (u:User {id: $userId}), (m:Movie {id: $movieId}) CREATE (u)-[:TAGGED { tag: $tag, timestamp: $timestamp }]->(m)',
         userId=tagData[0], movieId=tagData[1], tag=tagData[2], timestamp=tagData[3])
 
 def parseRowTagRelationships(row):
@@ -166,7 +166,7 @@ def updateMovieNodeWithLinks(row):
     linkData = parseRowLinks(row)
 
     graph.run(
-        'MATCH (m:Movie {id: {movieId}}) SET m += { imdbId: {imdbId} , tmdbId: {tmdbId} }',
+        'MATCH (m:Movie {id: $movieId}) SET m += { imdbId: $imdbId , tmdbId: $tmdbId }',
         movieId=linkData[0], imdbId=linkData[1], tmdbId=linkData[2])
 
 def parseRowLinks(row):

@@ -16,7 +16,7 @@ N_LINKS = 1000
 HOST = os.environ.get("NEO4J_HOST", "localhost")
 PORT = 7687
 USER = "neo4j"
-PASS = "neo4j" #default
+PASS = "Grupo06" #default
 
 graph = Graph("bolt://" + HOST + ":7687", auth=(USER, PASS))
 
