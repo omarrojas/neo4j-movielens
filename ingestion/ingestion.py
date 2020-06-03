@@ -1,12 +1,19 @@
 import csv
 from py2neo import Graph, Node
 
+'''
 N_MOVIES = 1000
 N_RATINGS = 1000
 N_TAGS = 1000
 N_LINKS = 1000
+'''
+N_MOVIES = 58099
+N_RATINGS = 27753445
+N_TAGS = 1108998
+N_LINKS = 58099
 
-USERNAME = "neo4j"
+#USERNAME = "neo4j"
+USERNAME = "usuario"
 PASS = "Grupo06" #default
 
 graph = Graph("bolt://localhost:7687", auth = (USERNAME, PASS))
@@ -39,7 +46,8 @@ def createGenreNodes():
 
 
 def loadMovies():
-    with open('data/movies.csv') as csvfile:
+    import csv
+    with open('data/movies.csv', encoding='utf-8') as csvfile:
         readCSV = csv.reader(csvfile, delimiter=',')
         next(readCSV, None)  # skip header
         for i, row in enumerate(readCSV):

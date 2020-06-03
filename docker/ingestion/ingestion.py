@@ -6,10 +6,16 @@ import time
 # wait for Neo4j in Docker
 time.sleep(15)
 
+'''
 N_MOVIES = 1000
 N_RATINGS = 1000
 N_TAGS = 1000
 N_LINKS = 1000
+'''
+N_MOVIES = 58099
+N_RATINGS = 27753445
+N_TAGS = 1108998
+N_LINKS = 58099
 
 # NEO4J_HOST will be provided by Docker, otherwise localhost
 
